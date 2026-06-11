@@ -6,6 +6,7 @@ spring:
       ddl-auto: update
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/hotelappDB
-    username: postgres
-    password: postgres
+    #url: jdbc:postgresql://localhost:5432/hotelappDB
+    url: jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require
+    username: postgres.sxrpcqaagmmiezrwkhxj
+    password: Postgres123+
