@@ -1,10 +1,12 @@
 package com.salas.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -15,13 +17,13 @@ public class RoomDTO {
     private Integer idRoom;
 
     @NotNull
-    private Integer numberDto;
+    private String numberDto;
 
     @NotNull
     private String typeDto;
 
     @NotNull
-    private Double priceDto;
+    private BigDecimal priceDto;
 
     @NotNull
     private Boolean availableDto;

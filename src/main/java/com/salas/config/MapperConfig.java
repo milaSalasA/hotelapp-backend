@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigDecimal;
+
 @Configuration
 public class MapperConfig {
 
@@ -40,8 +42,10 @@ public class MapperConfig {
         ModelMapper mapper = new ModelMapper();
 
         mapper.createTypeMap(Reservation.class, ReservationDTO.class)
-                .addMapping(e -> e.getRoom().getNumber(), (dest, v) -> dest.getRoom().setNumberDto((Integer) v) )
-                .addMapping(e -> e.getRoom().getType(), (dest, v) -> dest.getRoom().setTypeDto((String) v) );
+                .addMapping(e -> e.getRoom().getNumber(),   (dest, v) -> dest.getRoom().setNumberDto((String) v))
+                .addMapping(e -> e.getRoom().getType(),     (dest, v) -> dest.getRoom().setTypeDto((String) v))
+                .addMapping(e -> e.getRoom().getPrice(),    (dest, v) -> dest.getRoom().setPriceDto((BigDecimal) v))
+                .addMapping(e -> e.getRoom().getAvailable(),(dest, v) -> dest.getRoom().setAvailableDto((Boolean) v));
 
         return mapper;
     }

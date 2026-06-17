@@ -10,3 +10,9 @@ spring:
     url: jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require
     username: postgres.sxrpcqaagmmiezrwkhxj
     password: Postgres123+
+
+#Para tener dinámico el url del front, util para CORS
+app:
+  front:
+    #url: ${FRONT_URL}
+    url: http://localhost:4200
