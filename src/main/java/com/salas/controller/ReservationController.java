@@ -112,15 +112,14 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/saveFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> saveFile(@RequestParam("file") MultipartFile multipartFile) throws Exception{
+    public ResponseEntity<Integer> saveFile(@RequestParam("file") MultipartFile multipartFile) throws Exception{
         MediaFile mf = new MediaFile();
         mf.setContent(multipartFile.getBytes());
         mf.setFileName(multipartFile.getOriginalFilename());
         mf.setFileType(multipartFile.getContentType());
 
-        mediaFileService.save(mf);
-
-        return ResponseEntity.ok().build();
+        MediaFile saved = mediaFileService.save(mf);
+        return ResponseEntity.ok(saved.getIdFile());
     }
 
     @GetMapping(value = "/readFile/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

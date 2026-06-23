@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="reservas"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="535"
+              leftMargin="30"
+              rightMargin="30"
+              topMargin="30"
+              bottomMargin="30"
+              language="java">
+
+    <parameter name="txt_title" class="java.lang.String">
+        <defaultValueExpression><![CDATA["HOTELAPP RESERVATION REPORT"]]></defaultValueExpression>
+    </parameter>
+
+    <field name="quantity" class="java.lang.Integer"/>
+    <field name="consultdate" class="java.lang.String"/>
+
+    <variable name="totalReservations" class="java.lang.Integer" calculation="Sum">
+        <variableExpression><![CDATA[$F{quantity}]]></variableExpression>
+    </variable>
+
+    <title>
+        <band height="80" splitType="Stretch">
+
+            <rectangle>
+                <reportElement x="0" y="0" width="535" height="50" backcolor="#2C3E50" forecolor="#2C3E50"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <textField>
+                <reportElement x="0" y="0" width="535" height="50" forecolor="#FFFFFF"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{txt_title}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="55" width="535" height="20" forecolor="#7F8C8D"/>
+                <textElement textAlignment="Right">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Generado el: " + new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.util.Date())]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="30" splitType="Stretch">
+
+            <rectangle>
+                <reportElement x="0" y="0" width="535" height="30" backcolor="#2980B9" forecolor="#2980B9"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="0" y="0" width="320" height="30" forecolor="#FFFFFF"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <text><![CDATA[FECHA DE CHECK-IN]]></text>
+            </staticText>
+
+            <line>
+                <reportElement x="320" y="5" width="1" height="20" forecolor="#FFFFFF"/>
+            </line>
+
+            <staticText>
+                <reportElement x="321" y="0" width="214" height="30" forecolor="#FFFFFF"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <text><![CDATA[CANTIDAD DE RESERVAS]]></text>
+            </staticText>
+
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="28" splitType="Stretch">
+
+            <rectangle>
+                <reportElement x="0" y="0" width="535" height="28" backcolor="#EBF5FB" forecolor="#EBF5FB">
+                    <printWhenExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></printWhenExpression>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <line>
+                <reportElement x="0" y="27" width="535" height="1" forecolor="#D5D8DC"/>
+            </line>
+
+            <textField>
+                <reportElement x="10" y="0" width="300" height="28"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{consultdate}]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="320" y="5" width="1" height="18" forecolor="#BDC3C7"/>
+            </line>
+
+            <textField>
+                <reportElement x="321" y="0" width="204" height="28"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </detail>
+
+    <pageFooter>
+        <band height="25" splitType="Stretch">
+
+            <line>
+                <reportElement x="0" y="0" width="535" height="1" forecolor="#BDC3C7"/>
+            </line>
+
+            <staticText>
+                <reportElement x="0" y="5" width="200" height="18" forecolor="#95A5A6"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[HotelApp - Sistema de Reservas]]></text>
+            </staticText>
+
+            <textField evaluationTime="Report">
+                <reportElement x="335" y="5" width="200" height="18" forecolor="#95A5A6"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER} + " de " + $V{PAGE_COUNT}]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </pageFooter>
+
+    <summary>
+        <band height="50" splitType="Stretch">
+
+            <line>
+                <reportElement x="0" y="5" width="535" height="1" forecolor="#2980B9"/>
+                <graphicElement>
+                    <pen lineWidth="1.5"/>
+                </graphicElement>
+            </line>
+
+            <staticText>
+                <reportElement x="0" y="15" width="320" height="25"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL DE RESERVAS:]]></text>
+            </staticText>
+
+            <textField>
+                <reportElement x="321" y="15" width="204" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{totalReservations}]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </summary>
+
+</jasperReport>
