@@ -14,7 +14,7 @@ INSERT INTO user_role (id_user, id_role)
 VALUES (101, 1);
 
 INSERT INTO user_data (id_User, username, password, enabled)
-VALUES (101, 'admin', 'generar bycrypt clave', TRUE);
+VALUES (101, 'admin', 'generar bcrypt clave', TRUE);
 
 UPDATE user_data
 SET username = 'admin@gmail.com'
