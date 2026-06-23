@@ -10,6 +10,26 @@ spring:
     url: jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require
     username: postgres.sxrpcqaagmmiezrwkhxj
     password: Postgres123+
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: <TU_CORREO>
+    password: <TU_CLAVE>
+    port: 587
+    properties:
+      mail:
+        ssl:
+          enable: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    protocol: smtp
+    test-connection: false
+
+jwt:
+  secret: ${JWT_SECRET} # Se definió en el IDE local como variable de entorno
 
 #Para tener dinámico el url del front, util para CORS
 app:

@@ -1,14 +1,18 @@
 package com.salas.controller;
 
 import com.salas.dto.ReservationDTO;
+import com.salas.model.MediaFile;
 import com.salas.model.Reservation;
+import com.salas.service.IMediaFileService;
 import com.salas.service.IReservationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -20,6 +24,7 @@ import java.util.List;
 public class ReservationController {
 
     private final IReservationService service;
+    private final IMediaFileService mediaFileService;
 
     @Qualifier("reservationMapper")
     private final ModelMapper modelMapper;
@@ -99,6 +104,30 @@ public class ReservationController {
                 .toList();
 
         return ResponseEntity.ok(conflicts);
+    }
+
+    @GetMapping(value = "/generateReport", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE) //APPLICATION_PDF_VALUE
+    public ResponseEntity<byte[]> generateReport() throws Exception {
+        return ResponseEntity.ok(service.generateReport());
+    }
+
+    @PostMapping(value = "/saveFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> saveFile(@RequestParam("file") MultipartFile multipartFile) throws Exception{
+        MediaFile mf = new MediaFile();
+        mf.setContent(multipartFile.getBytes());
+        mf.setFileName(multipartFile.getOriginalFilename());
+        mf.setFileType(multipartFile.getContentType());
+
+        mediaFileService.save(mf);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/readFile/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> readFile(@PathVariable Integer id) throws Exception{
+        MediaFile mf = mediaFileService.findById(id);
+
+        return ResponseEntity.ok(mf.getContent());
     }
 
     private Reservation convertToEntity(ReservationDTO dto) {

@@ -1,5 +1,6 @@
 package com.salas.service.impl;
 
+import com.salas.dto.ReservationProcDTO;
 import com.salas.exception.ModelNotFoundException;
 import com.salas.model.Reservation;
 import com.salas.model.Room;
@@ -8,11 +9,18 @@ import com.salas.repo.IReservationRepo;
 import com.salas.repo.IRoomRepo;
 import com.salas.service.IReservationService;
 import lombok.RequiredArgsConstructor;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -74,6 +82,21 @@ public class ReservationServiceImpl extends CRUDImpl<Reservation, Integer> imple
     @Override
     public List<Reservation> searchByCheckInDateRange(LocalDateTime startDate, LocalDateTime endDate) {
         return repo.searchByCheckInDateRange(startDate, endDate);
+    }
+
+    @Override
+    public List<ReservationProcDTO> callProcedureOrFunctionNative() {
+        return repo.callProcedureOrFunctionNative();
+    }
+
+    @Override
+    public byte[] generateReport() throws Exception {
+        Map<String, Object> params = new HashMap<>();
+        params.put("txt_title", "HOTELAPP CONSULT REPORT");
+
+        File file = new ClassPathResource("reports/reservas.jasper").getFile();
+        JasperPrint print = JasperFillManager.fillReport(file.getPath(), params, new JRBeanCollectionDataSource(callProcedureOrFunctionNative()));
+        return JasperExportManager.exportReportToPdf(print);
     }
 }
 

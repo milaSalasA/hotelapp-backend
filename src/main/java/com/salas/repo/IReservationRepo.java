@@ -1,5 +1,6 @@
 package com.salas.repo;
 
+import com.salas.dto.ReservationProcDTO;
 import com.salas.model.Reservation;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +26,7 @@ public interface IReservationRepo extends IGenericRepo<Reservation, Integer> {
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
     );
+
+    @Query(value = "select * from fn_list()", nativeQuery = true)
+    List<ReservationProcDTO> callProcedureOrFunctionNative();
 }

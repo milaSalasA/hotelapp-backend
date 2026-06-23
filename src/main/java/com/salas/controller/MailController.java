@@ -1,11 +1,11 @@
 package com.salas.controller;
 
-import com.mitocode.model.ResetMail;
-import com.mitocode.model.User;
-import com.mitocode.service.IResetMailService;
-import com.mitocode.service.IUserService;
-import com.mitocode.util.EmailUtil;
-import com.mitocode.util.Mail;
+import com.salas.model.ResetMail;
+import com.salas.model.User;
+import com.salas.service.IResetMailService;
+import com.salas.service.IUserService;
+import com.salas.util.EmailUtil;
+import com.salas.util.Mail;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

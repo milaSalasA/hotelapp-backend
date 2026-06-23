@@ -1,9 +1,8 @@
 package com.salas.controller;
 
-import com.mitocode.security.JwtRequest;
-import com.mitocode.security.JwtResponse;
-import com.mitocode.security.JwtTokenUtil;
-import com.mitocode.security.JwtUserDetailsService;
+import com.salas.security.JwtRequest;
+import com.salas.security.JwtTokenUtil;
+import com.salas.security.JwtUserDetailsService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -34,7 +33,6 @@ public class LoginController {
     private final JwtUserDetailsService jwtUserDetailsService;
 
     @PostMapping("/login")
-    //public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest jwtRequest) throws Exception {
     public ResponseEntity<Boolean> login(@RequestBody JwtRequest jwtRequest, HttpServletResponse response) throws Exception {
         try{
             authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
@@ -44,16 +42,15 @@ public class LoginController {
 
             ResponseCookie cookie = ResponseCookie.from("jwt", accessToken)
                     .httpOnly(true)
-                    .secure(false) //true para HTTPS
+                    .secure(false)
                     .path("/")
-                    .sameSite("Lax") //Lax en local //None en produccion
+                    .sameSite("Lax")
                     .maxAge(Duration.ofHours(5))
                     .build();
 
             response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
             return ResponseEntity.ok(true);
-            //return ResponseEntity.ok(new JwtResponse(accessToken));
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -74,9 +71,9 @@ public class LoginController {
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         ResponseCookie cookie = ResponseCookie.from("jwt", "")
                 .httpOnly(true)
-                .secure(false) //true para HTTPS
+                .secure(false)
                 .path("/")
-                .sameSite("Lax") //Lax en local //None en produccion
+                .sameSite("Lax")
                 .maxAge(0)
                 .build();
 

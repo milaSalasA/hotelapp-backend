@@ -1,5 +1,6 @@
 package com.salas.service;
 
+import com.salas.dto.ReservationProcDTO;
 import com.salas.model.Reservation;
 
 import java.time.LocalDateTime;
@@ -11,5 +12,6 @@ public interface IReservationService extends ICRUD<Reservation, Integer> {
     List<Reservation> findConflictingReservations(Integer roomId, LocalDateTime checkIn, LocalDateTime checkOut);
     List<Reservation> searchByCustomerName(String customerName);
     List<Reservation> searchByCheckInDateRange(LocalDateTime startDate, LocalDateTime endDate);
+    List<ReservationProcDTO> callProcedureOrFunctionNative();
+    byte[] generateReport() throws Exception;
 }
-
